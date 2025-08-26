@@ -5,6 +5,7 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    'my_custom_value' => 'Bla Bla',
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -16,7 +17,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Learning Project'),
 
     /*
     |--------------------------------------------------------------------------
