@@ -1,7 +1,17 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MyController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductsDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +23,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/user/insert', function () {
+
+    return view('user.register_form');
+})->name('insert-user');
 
 Route::get('/', function () {
 
@@ -47,36 +62,19 @@ Route::redirect('/sachin',  url('myfile'));
 
 
 Route::prefix('red_store')->name('red_store.')->group(function () {
-    Route::get('/', function () {
-        $myData = [
-            'name' => "Sachin Sarola"
-        ];
-        return view('red_store.home', $myData);
-    })->name('home');
+    Route::get('/', [HomeController::class,'index'])->name('home');
 
-    Route::get('/about', function () {
-        return view('red_store.about');
-    })->name('about');
+    Route::get('/about',[AboutController::class,'index'])->name('about');
 
-    Route::get('/contact', function () {
-        return view('red_store.contact');
-    })->name('contact');
+    Route::get('/contact',[ContactController::class,'index'])->name('contact');
 
-    Route::get('/accounts', function () {
-        return view('red_store.accounts');
-    })->name('accounts');
+    Route::get('/accounts', [AccountsController::class,'index'])->name('accounts');
 
-    Route::get('/cart', function () {
-        return view('red_store.cart');
-    })->name('cart');
+    Route::get('/cart', [CartController::class,'index'])->name('cart');
 
-    Route::get('/product_details', function () {
-        return view('red_store.product_details');
-    })->name('product_details');
+    Route::get('/product_details',[ProductsDetailsController::class,'index'])->name('product_details');
 
-    Route::get('/products', function () {
-        return view('red_store.products');
-    })->name('products');
+    Route::get('/products',[ProductsController::class,'index'])->name('products');
 });
 
 
@@ -85,3 +83,12 @@ Route::prefix('admin')->group(function () {
         // Matches The "/admin/users" URL
     });
 });
+
+Route::get('/user/xyz', [UserController::class, 'sachin']);
+Route::post('/user/xyz', [UserController::class, 'storeData'])->name('insert.user');
+
+Route::get('/user/{id}', [UserController::class, 'show']);
+
+Route::resource('photos', PhotoController::class);
+
+Route::resource('redstore', MyController::class);

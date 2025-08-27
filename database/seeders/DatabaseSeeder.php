@@ -13,13 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(100)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Subhash Magharola',
         //     'email' => 'subhash123@example.com',
         // ]);
 
-        // Flight::factory()->count(30)->create(); // 50 random flights
+        Flight::factory()->count(100)->create(); // 50 random flights
     }
 }
