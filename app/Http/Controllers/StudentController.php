@@ -14,7 +14,7 @@ class StudentController extends Controller
     {
 
        $students = Student::find(101);
-
+        
        echo "<pre>";
        print_r($students->toArray());
        echo "</pre>";

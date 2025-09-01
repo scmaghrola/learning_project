@@ -95,4 +95,6 @@ Route::resource('photos', PhotoController::class);
 Route::resource('redstore', MyController::class);
 
 
+Route::resource('users', UserController::class);
+
 Route::resource('students', StudentController::class);
