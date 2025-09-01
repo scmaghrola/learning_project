@@ -18,16 +18,16 @@
       <h3>Add New User</h3>
     </div>
     <div class="card-body p-4">
-      <form action="" method="post">
-
+      <form action="{{ route('students.store') }}" method="post">
+        @csrf
         <div class="mb-3">
           <label for="username" class="form-label">Name</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Enter your name">
+          <input type="text" class="form-control" id="username" name="name" placeholder="Enter your name">
         </div>
 
         <div class="mb-3">
           <label for="userEmail" class="form-label">Email</label>
-          <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Enter your email">
+          <input type="email" class="form-control" id="userEmail" name="email" placeholder="Enter your email">
         </div>
 
         <div class="mb-3">
@@ -40,7 +40,15 @@
     </div>
   </div>
 
+  <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+  
+  <script>
+
+  </script>
 
 </html>

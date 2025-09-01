@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\AccountsController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MyController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductsDetailsController;
 
@@ -92,3 +93,6 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::resource('photos', PhotoController::class);
 
 Route::resource('redstore', MyController::class);
+
+
+Route::resource('students', StudentController::class);
