@@ -12,27 +12,35 @@
 </head>
 
 <body class="d-flex align-items-center justify-content-center vh-100">
-
   <div class="card" style="width: 100%; max-width: 420px;">
     <div class="card-header">
       <h3>Add New User</h3>
     </div>
     <div class="card-body p-4">
-      <form action="{{ route('students.store') }}" method="post">
+      <form action="{{ route('users.store') }}" method="post">
         @csrf
         <div class="mb-3">
           <label for="username" class="form-label">Name</label>
-          <input type="text" class="form-control" id="username" name="name" placeholder="Enter your name">
+          <input type="text" class="form-control @error('name') is-invalid @enderror" id="username" name="name" placeholder="Enter your name" value="{{ old('name') }}">
+          @error('name')
+            <div class="invalid-feedback">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="mb-3">
           <label for="userEmail" class="form-label">Email</label>
-          <input type="email" class="form-control" id="userEmail" name="email" placeholder="Enter your email">
+          <input type="email" class="form-control @error('email') is-invalid @enderror" id="userEmail" name="email" placeholder="Enter your email" value="{{ old('email') }}">
+          @error('email')
+            <div class="invalid-feedback">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+          <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Enter your password">
+          @error('password')
+            <div class="invalid-feedback">{{ $message }}</div>
+          @enderror
         </div>
 
         <button type="submit" name="submit" class="btn btn-custom w-100">Register</button>
