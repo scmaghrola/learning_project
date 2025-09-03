@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
@@ -51,5 +50,46 @@ class UserController extends Controller
         $user->password = bcrypt($reqeust->password);
         $user->save();
         return redirect()->route('students.index')->with('success', 'User registered successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $user = User::findOrFail($id);
+        return view('user.register_form', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(\App\Http\Requests\UpdateUserRequest $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $validated = $request->validated();
+
+        info('validated'); info($validated);
+        info('request'); info($request->all());
+
+        // Only update password if provided
+        if (!empty($validated['password'])) {
+            $validated['password'] = bcrypt($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+    }
+    
+    /**
+     * Remove the specified user from storage.
+     */
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

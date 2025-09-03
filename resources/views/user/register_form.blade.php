@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Bootstrap 5 Form</title>
+  <title>Register Form</title>
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,11 +17,14 @@
       <h3>Add New User</h3>
     </div>
     <div class="card-body p-4">
-      <form action="{{ route('users.store') }}" method="post">
+      <form action="{{ isset($user) ? route('users.update', $user->id) : route('users.store') }}" method="post">
         @csrf
+        @if(isset($user))
+          @method('PUT')
+        @endif
         <div class="mb-3">
           <label for="username" class="form-label">Name</label>
-          <input type="text" class="form-control @error('name') is-invalid @enderror" id="username" name="name" placeholder="Enter your name" value="{{ old('name') }}">
+          <input type="text" class="form-control @error('name') is-invalid @enderror" id="username" name="name" placeholder="Enter your name" value="{{ old('name', isset($user) ? $user->name : '') }}">
           @error('name')
             <div class="invalid-feedback">{{ $message }}</div>
           @enderror
@@ -29,7 +32,7 @@
 
         <div class="mb-3">
           <label for="userEmail" class="form-label">Email</label>
-          <input type="email" class="form-control @error('email') is-invalid @enderror" id="userEmail" name="email" placeholder="Enter your email" value="{{ old('email') }}">
+          <input type="email" class="form-control @error('email') is-invalid @enderror" id="userEmail" name="email" placeholder="Enter your email" value="{{ old('email', isset($user) ? $user->email : '') }}">
           @error('email')
             <div class="invalid-feedback">{{ $message }}</div>
           @enderror
@@ -43,7 +46,7 @@
           @enderror
         </div>
 
-        <button type="submit" name="submit" class="btn btn-custom w-100">Register</button>
+        <button type="submit" name="submit" class="btn btn-custom w-100">{{ isset($user) ? 'Update' : 'Register' }}</button>
       </form>
     </div>
   </div>

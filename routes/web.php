@@ -1,4 +1,7 @@
 <?php
+// use Illuminate\Support\Facades\Auth;
+// use Illuminate\Http\Request;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +16,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductsDetailsController;
-
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +28,51 @@ use App\Http\Controllers\ProductsDetailsController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/mySecrete/page', function(){
+    echo "This is my atm pin: 7777";
+})->middleware('myCustom')->name('mySecrete');
+
+// Route to resend email verification
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('success', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+// Login routes
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+// Route to log in user with id 1
+Route::get('/login-user', function () {
+    Auth::loginUsingId(87);
+    return 'Logged in as user 1';
+});
+
+// Route to log out current user
+Route::get('/logout-user', function () {
+    Auth::logout();
+    return 'Logged out';
+});
+
+
+// Example route protected by auth middleware
+Route::get('/middleware', function () {
+    echo "<pre>";
+    print_r("HEllow World");
+    echo "</pre>";
+})->middleware('auth');
+
+Route::get('/xxx', function () {
+    $user = Auth::user();
+    $user->name = 'Rani Pari';
+    $user->save();
+    dd($user->toArray());
+    echo "<pre>";
+    print_r("HEllow World xxx");
+    echo "</pre>";
+})->middleware(['auth', 'verified']);
+
 
 Route::get('/user/insert', function () {
 
@@ -98,3 +147,9 @@ Route::resource('redstore', MyController::class);
 Route::resource('users', UserController::class);
 
 Route::resource('students', StudentController::class);
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+?>
+
